@@ -17,11 +17,11 @@ module.exports.fetchLiveRates = function () {
   })
 };
 
-module.exports.fetchLocalRates = function () {
+module.exports.fetchLocalRates = function (convertFrom, convertTo) {
   return new Promise(function (resolve, reject) {
     fs.readFileAsync(ratesPath, 'utf-8')
       .then(function (contents) {
-        resolve(utils.parser(contents));
+        resolve(utils.parser(contents, convertFrom, convertTo));
       });    
   })
 };

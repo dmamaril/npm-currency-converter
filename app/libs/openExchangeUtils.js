@@ -22,11 +22,16 @@ module.exports.update = function (liveRates) {
   return ratesTxt.slice(0, -1);
 };
 
-module.exports.parser = function (localRates) {
+module.exports.parser = function (localRates, convertFrom, convertTo) {
   var results = {};
   localRates  = localRates.split('\n');
 
   for (var i = 0 ; i < localRates.length; i ++) {
+    //short circuit the loop by returning when both rates are retrieved
+    if (results[convertFrom] && results[convertTo]) {
+      return [ results[convertFrom], results[convertTo] ];
+    }
+    
     var temp      = localRates[i].split('=');
     var currency  = temp[0];
 
@@ -36,6 +41,4 @@ module.exports.parser = function (localRates) {
 
     results[currency] = { 'symbol' : symbol, 'rate' : rate };
   }
-
-  return results;
 };

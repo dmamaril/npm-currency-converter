@@ -9,12 +9,14 @@ module.exports.convert = function (options) {
   return new Promise(function (resolve, reject) {
     resolve(
       oxr.fetchLiveRates()
-         .then(oxr.fetchLocalRates)
+         .then(function () {
+            return oxr.fetchLocalRates(options.convertFrom, options.convertTo);
+         })
          .then(function (rates) {
-            var convertedRate = (options.amount / rates[options.convertFrom]['rate']) * rates[options.convertTo]['rate'];
+            var convertedRate = (options.amount / rates[0]['rate']) * rates[1]['rate'];
             return {
               'currency'  : options.convertTo,
-              'symbol'    : rates[options.convertTo].symbol,
+              'symbol'    : rates[1].symbol,
               'amount'    : convertedRate.round(2)
             }
          })
