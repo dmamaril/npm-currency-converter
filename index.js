@@ -1,21 +1,24 @@
 var fs      = require('fs');
 var Promise = require('bluebird');
-var oxr     = require('./app/libs/openExchangeRates.js');
+var oxr     = require('./app/openExchangeRates.js');
 
 
 fs = Promise.promisifyAll(fs);
 
-
-var CurrencyConverter = {};
-
-CurrencyConverter.convert = function (input) {
+module.exports.convert = function (options) {
   return new Promise(function (resolve, reject) {
-    reject();
-  });
+    resolve(
+      oxr.fetchLiveRates()
+         .then(oxr.fetchLocalRates)
+         .then(function (rates) {
+            var convertedRate = (options.amount / rates[options.convertFrom]['rate']) * rates[options.convertTo]['rate'];
+            return {
+              'currency'  : options.convertTo,
+              'symbol'    : rates[options.convertTo].symbol,
+              'amount'    : convertedRate.round(2)
+            }
+         })
+    )
+  })
 };
 
-CurrencyConverter.rates = function (rates) {
-  console.log(rates);
-};
-
-module.exports = CurrencyConverter;
