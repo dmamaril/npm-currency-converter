@@ -1,0 +1,30 @@
+{
+  "name": "npm-currency-converter",
+  "version": "0.0.0",
+  "description": "npm-currency-converter ==================",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mamarildon/npm-currency-converter.git"
+  },
+  "keywords": [
+    "currency",
+    "convert",
+    "exchange",
+    "rates"
+  ],
+  "author": "donmamaril.io",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mamarildon/npm-currency-converter/issues"
+  },
+  "homepage": "https://github.com/mamarildon/npm-currency-converter",
+  "dependencies": {
+    "bluebird": "^2.3.2",
+    "request": "^2.40.0"
+  }
+}

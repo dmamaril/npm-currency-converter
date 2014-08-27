@@ -1,2 +1,2 @@
-npm-currency-converter
-======================
+currency-converter-module
+=========================
