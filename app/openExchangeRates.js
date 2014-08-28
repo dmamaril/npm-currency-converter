@@ -28,7 +28,9 @@ module.exports.fetchLocalRates = function (options) {
   return new Promise(function (resolve, reject) {
     fs.readFileAsync(ratesPath, 'utf-8')
       .then(function (contents) {
-        resolve(utils.parser(contents, options.convertFrom, options.convertTo));
+        contents.length ? 
+          resolve(utils.parser(contents, options.convertFrom, options.convertTo)) :
+            resolve(module.exports.fetchLiveRates(options));
       });    
   })
 };
