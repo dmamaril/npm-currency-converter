@@ -47,21 +47,3 @@ returns the conversion rate between two currencies. Additionally, you can also s
     "USD_EUR": 0.76
   }
 ```
-
-<h2>.verifyInput(input)</h2> 
-will verify that your input object has valid inputs.
-
-<h1> Sample </h1>
-```
-if (cc.verifyInput(input)) {
-  cc.convert(input)
-    .then(function (convertedCurrency) {
-      res.send(200, convertedCurrency);
-    })
-    .catch(function (err) {
-      res.send(500, "Error converting currency");
-    });
-} else {
-  res.send(400, "Invalid input");
-}
-```
