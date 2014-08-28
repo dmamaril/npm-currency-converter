@@ -8,9 +8,20 @@ module.exports.convert = function (options) {
   return new Promise(function (resolve, reject) {
     resolve(
       oxr.fetchOptions(options)
-         .then(function (converted) {
-          return converted;
+         .then(function (rates) {
+            return oxr.formatConversion(options, rates);
          })
-    )
-  })
+    );
+  });
 };
+
+module.exports.rates = function (options) {
+  return new Promise(function (resolve, reject) {
+    resolve(
+      oxr.fetchOptions(options)
+         .then(function (rates) {
+            return oxr.formatConversionRate(options, rates);
+         })
+    );
+  });
+}
