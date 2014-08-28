@@ -42,6 +42,5 @@ module.exports.formatConversion = function (options, rates) {
  };
 
  module.exports.formatConversionRate = function (options, rates) {
-  var conversionRate = (1/rates[0]['rate']) * rates[1]['rate'];
-  return 1 + options.convertFrom + '=' + ' ' + rates[1]['symbol'] + (conversionRate.round(2));
+  return ((1/rates[0]['rate']) * rates[1]['rate']).round(2);
  };
