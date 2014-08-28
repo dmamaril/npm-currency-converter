@@ -8,9 +8,10 @@ install the package
 ```
 npm install currency-converter
 ```
-require the module
+require the module. 
+NOTE: Default fetchInterval value is set to one hour.
 ```
-var cc = require('currency-converter')({ CLIENTKEY: YOUR_OPEN_EXCHANGE_RATES_KEY, fetchInterval: 3600000 });
+var cc = require('currency-converter')({ CLIENTKEY: YOUR_OPEN_EXCHANGE_RATES_KEY, [fetchInterval: 3600000] });
 ```
 
 <h1> Usage </h1>
