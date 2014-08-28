@@ -4,20 +4,24 @@ var request   = require('request');
 var Promise   = require('bluebird');
 var utils     = require('./openExchangeRateUtils.js');
 
+fs            = Promise.promisifyAll(fs);
+
 var ratesPath = path.join(__dirname, './db/rates.txt');
 
 module.exports.URL = 'http://openexchangerates.org/api/latest.json?app_id=';
 
 module.exports.init = function (fetchInterval) {
   fetchInterval = fetchInterval || 3600000;
-  setInterval(module.exports.fetchOptions, fetchInterval);
+  setInterval(module.exports.fetchOptions, fetchInterval, {});
 };
 
 module.exports.createProxy = function (task, options) {
-  module.exports.fetchOptions(options)
-        .then(function (rates) {
-          return module.exports[task](options, rates);
-        });
+  return new Promise(function (resolve, reject) { 
+    module.exports.fetchOptions(options)
+          .then(function (rates) {
+            resolve(utils[task](options, rates));
+          });
+  })
 };
 
 module.exports.fetchOptions = function (options) {
@@ -48,15 +52,3 @@ module.exports.fetchLocalRates = function (options) {
       });    
   })
 };
-
-module.exports.formatConversion = function (options, rates) {
-  var convertedRate = (options.amount / rates[0]['rate']) * rates[1]['rate'];
-  return {
-    'currency'  : options.convertTo,
-    'symbol'    : rates[1].symbol,
-    'amount'    : utils.round(convertedRate) };
- };
-
- module.exports.formatConversionRate = function (options, rates) {
-  return utils.round( ((1/rates[0]['rate']) * rates[1]['rate']) );
- };

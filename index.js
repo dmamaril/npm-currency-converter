@@ -3,26 +3,17 @@ var Promise     = require('bluebird');
 var oxr         = require('./app/openExchangeRates.js');
 var currencies  = require('./app/libs/currencies.js');
 
+var currency_converter = {};
 
 currency_converter.convert = function (options) {
   return new Promise(function (resolve, reject) {
-    resolve(oxr.createProxy('formatConversion', options)
-      // oxr.fetchOptions(options)
-      //    .then(function (rates) {
-      //       return oxr.formatConversion(options, rates);
-      //    })
-    );
+    resolve(oxr.createProxy('formatConversion', options))
   });
 };
 
 currency_converter.rates = function (options) {
   return new Promise(function (resolve, reject) {
-    resolve(oxr.createProxy('formatConversionRate', options)
-      // oxr.fetchOptions(options)
-      //    .then(function (rates) {
-      //       return oxr.formatConversionRate(options, rates);
-      //    })
-    );
+    resolve(oxr.createProxy('formatConversionRate', options));
   });
 };
 

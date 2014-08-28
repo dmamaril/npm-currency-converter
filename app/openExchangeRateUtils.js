@@ -24,17 +24,27 @@ module.exports.read = function (localRates, convertFrom, convertTo) {
   localRates  = localRates.split('\n');
 
   for (var i = 0 ; i < localRates.length; i ++) {
-
     if (results[convertFrom] && results[convertTo]) {
       return [ results[convertFrom], results[convertTo] ];
     }
-    
+
     var temp      = localRates[i].split('=');
     var currency  = temp[0];
     temp          = temp[1].split(' ');
     var symbol    = temp[0];
     var rate      = temp[1];
-
     results[currency] = { 'symbol' : symbol, 'rate' : rate };
   }
 };
+
+module.exports.formatConversion = function (options, rates) {
+  var convertedRate = (options.amount / rates[0]['rate']) * rates[1]['rate'];
+  return {
+    'currency'  : options.convertTo,
+    'symbol'    : rates[1].symbol,
+    'amount'    : module.exports.round(convertedRate) };
+ };
+
+ module.exports.formatConversionRate = function (options, rates) {
+  return module.exports.round( ((1/rates[0]['rate']) * rates[1]['rate']) );
+ };
