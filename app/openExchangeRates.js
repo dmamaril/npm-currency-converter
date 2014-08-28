@@ -8,7 +8,7 @@ var ratesPath = path.join(__dirname, './db/rates.txt');
 
 module.exports.fetchOptions = function (options) {
   return new Promise(function (resolve, reject) {
-    var fetchOption = !options.local ? module.exports.fetchLocalRates : module.exports.fetchLiveRates;
+    var fetchOption = options.local ? module.exports.fetchLocalRates : module.exports.fetchLiveRates;
     resolve(fetchOption(options));
   });
 }

@@ -1,8 +1,7 @@
 var fs         = require('fs');
 var currencies = require('./currencies.js');
 
-/* Kudos to: http://stackoverflow.com/a/19722641 
-   incorrectly rounding up INR 60.4447 => 60.42 */
+// Kudos to: http://stackoverflow.com/a/19722641 
 Number.prototype.round = function(places) {
   return +(Math.round(this + "e+" + places)  + "e-" + places);
 }
@@ -27,7 +26,6 @@ module.exports.parser = function (localRates, convertFrom, convertTo) {
   localRates  = localRates.split('\n');
 
   for (var i = 0 ; i < localRates.length; i ++) {
-    //short circuit the loop by returning when both rates are retrieved
     if (results[convertFrom] && results[convertTo]) {
       return [ results[convertFrom], results[convertTo] ];
     }

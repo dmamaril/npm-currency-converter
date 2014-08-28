@@ -2,10 +2,10 @@
   "name": "npm-currency-converter",
   "version": "0.0.0",
   "description": "npm-currency-converter ==================",
-  "main": "app.js",
+  "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node app.js"
+    "start": "node index.js"
   },
   "repository": {
     "type": "git",
