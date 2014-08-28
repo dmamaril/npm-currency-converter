@@ -6,6 +6,9 @@ var utils       = require('./app/openExchangeRateUtils.js');
 var currency_converter = {};
 
 currency_converter.convert = function (amount, convertFrom, convertTo, local) {
+  convertFrom = convertFrom.toUpperCase();
+  convertTo   = convertTo.toUpperCase();
+
   return new Promise(function (resolve, reject) {
     utils.verifyInput(convertFrom, convertTo, amount) ? 
       resolve(oxr.createProxy('formatConversion', 
@@ -15,6 +18,9 @@ currency_converter.convert = function (amount, convertFrom, convertTo, local) {
 };
 
 currency_converter.rates = function (convertFrom, convertTo, local) {
+  convertFrom = convertFrom.toUpperCase();
+  convertTo   = convertTo.toUpperCase();
+  
   return new Promise(function (resolve, reject) {
     utils.verifyInput(convertFrom, convertTo) ?
     resolve(oxr.createProxy('formatConversionRate', 
