@@ -1,14 +1,13 @@
 var currencies = require('./libs/currencies.js');
 
-module.exports.verifyInput = function (amount, convertFrom, convertTo) {
+module.exports.verifyInput = function (convertFrom, convertTo, amount) {
   var checkAmount   = true;
   var checkCurrency = currencies.hasOwnProperty(convertFrom) && 
                       currencies.hasOwnProperty(convertTo);
 
   if (amount) { checkAmount = !isNaN(amount); }
 
-  return checkAmount && checkCurrency ? 
-    { 'amount': amount, 'convertFrom': convertFrom, 'convertTo': convertTo } : false;
+  return checkAmount && checkCurrency;
 };
 
 // Kudos to: http://stackoverflow.com/a/19722641 
