@@ -9,11 +9,11 @@ npm install <insert npm name later>
 ```
 require the module
 ```
-var cc = require('<insert npm name later>);
+var cc = require('<insert npm name later>');
 ```
 
-<h2> Usage </h2>
-This module makes it <em>extremely</em> easy for you to convert currencies. All methods take an input object. The very basic input takes in two parameters. <b> convertFrom </b> &  <b> convertTo </b> have to be valid country codes. See list <a href='http://www.localeplanet.com/api/auto/currencymap.html'> here</a>.
+<h1> Usage </h1>
+This module makes it <em>extremely</em> easy for you to convert currencies. All methods take an input object. The very basic input takes in two parameters. <b> convertFrom </b> &  <b> convertTo </b> have to be valid country codes. See list <a href='http://www.localeplanet.com/api/auto/currencymap.html'> here</a>. By default, <b>.convert()</b> will retrieve the live rates from <a href='http://openexchangerates.org'>openexchangerates.org</a>
 
 ```
 var input = {
@@ -22,3 +22,45 @@ var input = {
 };
 ```
 
+<h2>.convert(input)</h2> 
+converts an amount specificed to a specific currency. With that said, you have two possible properties that you'll need to add to your input object.
+
+```
+input.amount = 1.00;
+input.local  = true; // optional
+```
+adding a <b>local</b> property will retrieve locally stored rates.
+
+```
+{
+    "currency": "EUR",
+    "symbol": "€",
+    "amount": 0.76
+}
+```
+
+<h2>.rates(input)</h2> 
+returns the conversion rate between two currencies. Additionally, you can also set <b>input.local</b> should you choose to use locally stored rates.
+```
+  {
+    "USD_EUR": 0.76
+  }
+```
+
+<h2>.verifyInput(input)</h2> 
+will verify that your input object has valid inputs.
+
+<h1> Sample </h1>
+```
+if (cc.verifyInput(input)) {
+  cc.convert(input)
+    .then(function (convertedCurrency) {
+      res.send(200, convertedCurrency);
+    })
+    .catch(function (err) {
+      res.send(500, "Error converting currency");
+    });
+} else {
+  res.send(400, "Invalid input");
+}
+```
