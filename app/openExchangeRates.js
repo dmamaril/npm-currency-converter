@@ -15,7 +15,7 @@ module.exports.fetchOptions = function (options) {
 
 module.exports.fetchLiveRates = function (options) {
   return new Promise(function (resolve, reject) {
-    request.get(require('./config/openExchangeRates.js').URL, function (err, res) {
+    request.get(require('./libs/openExchangeRatesKey.js').URL, function (err, res) {
       fs.writeFileAsync(ratesPath, utils.update(JSON.parse(res.body).rates))
         .then(function () {
           resolve(module.exports.fetchLocalRates(options));

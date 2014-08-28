@@ -1,11 +1,14 @@
 var fs          = require('fs');
 var Promise     = require('bluebird');
-var currencies  = require('./app/libs/currencies.js');
 var oxr         = require('./app/openExchangeRates.js');
+var currencies  = require('./app/libs/currencies.js');
+var OXR_KEY     = require('./app/libs/openExchangeRatesKey.js');
 
 fs = Promise.promisifyAll(fs);
 
-module.exports.convert = function (options) {
+var currency_converter = {};
+
+currency_converter.convert = function (options) {
   return new Promise(function (resolve, reject) {
     resolve(
       oxr.fetchOptions(options)
@@ -16,7 +19,7 @@ module.exports.convert = function (options) {
   });
 };
 
-module.exports.rates = function (options) {
+currency_converter.rates = function (options) {
   return new Promise(function (resolve, reject) {
     resolve(
       oxr.fetchOptions(options)
@@ -27,7 +30,7 @@ module.exports.rates = function (options) {
   });
 };
 
-module.exports.verifyInput = function (input) {
+currency_converter.verifyInput = function (input) {
   var checkAmount   = true;
   var checkCurrency = currencies.hasOwnProperty(input.convertFrom) && 
                       currencies.hasOwnProperty(input.convertTo);
@@ -35,4 +38,9 @@ module.exports.verifyInput = function (input) {
   if (input.amount) { checkAmount = !isNaN(input.amount); }
 
   return checkAmount && checkCurrency;
+};
+
+module.exports = function (openExchangeRatesKey) {
+  OXR_KEY.URL += openExchangeRatesKey;
+  return currency_converter;
 };

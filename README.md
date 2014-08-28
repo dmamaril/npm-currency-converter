@@ -3,13 +3,14 @@ npm-currency-converter
 Conversion rates between currencies and rate conversion!
 
 <h1> Start </h1>
+Register for your <a href='https://openexchangerates.org/signup/free'>openexchangerates</a>.
 install the package
 ```
-npm install <insert npm name later>
+npm install currency-converter
 ```
 require the module
 ```
-var cc = require('<insert npm name later>');
+var cc = require('currency-converter')("YOUR_OPEN_EXCHANGE_RATES_KEY");
 ```
 
 <h1> Usage </h1>
