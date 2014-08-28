@@ -2,9 +2,23 @@ var fs        = require('fs');
 var path      = require('path');
 var request   = require('request');
 var Promise   = require('bluebird');
-var utils     = require('./libs/openExchangeUtils.js');
+var utils     = require('./openExchangeRateUtils.js');
 
 var ratesPath = path.join(__dirname, './db/rates.txt');
+
+module.exports.URL = 'http://openexchangerates.org/api/latest.json?app_id=';
+
+module.exports.init = function (fetchInterval) {
+  fetchInterval = fetchInterval || 3600000;
+  setInterval(module.exports.fetchOptions, fetchInterval);
+};
+
+module.exports.createProxy = function (task, options) {
+  module.exports.fetchOptions(options)
+        .then(function (rates) {
+          return module.exports[task](options, rates);
+        });
+};
 
 module.exports.fetchOptions = function (options) {
   return new Promise(function (resolve, reject) {
@@ -15,10 +29,10 @@ module.exports.fetchOptions = function (options) {
 
 module.exports.fetchLiveRates = function (options) {
   return new Promise(function (resolve, reject) {
-    request.get(require('./libs/openExchangeRatesKey.js').URL, function (err, res) {
-      fs.writeFileAsync(ratesPath, utils.update(JSON.parse(res.body).rates))
+    request.get(module.exports.URL, function (err, res) {
+      fs.writeFileAsync(ratesPath, utils.write(JSON.parse(res.body).rates))
         .then(function () {
-          resolve(module.exports.fetchLocalRates(options));
+          options ? resolve(module.exports.fetchLocalRates(options)) : resolve();
         })
     });
   })
@@ -29,8 +43,8 @@ module.exports.fetchLocalRates = function (options) {
     fs.readFileAsync(ratesPath, 'utf-8')
       .then(function (contents) {
         contents.length ? 
-          resolve(utils.parser(contents, options.convertFrom, options.convertTo)) :
-            resolve(module.exports.fetchLiveRates(options));
+          resolve(utils.read(contents, options.convertFrom, options.convertTo)) :
+          resolve(module.exports.fetchLiveRates(options));
       });    
   })
 };
@@ -40,9 +54,9 @@ module.exports.formatConversion = function (options, rates) {
   return {
     'currency'  : options.convertTo,
     'symbol'    : rates[1].symbol,
-    'amount'    : convertedRate.round(2) };
+    'amount'    : utils.round(convertedRate) };
  };
 
  module.exports.formatConversionRate = function (options, rates) {
-  return ((1/rates[0]['rate']) * rates[1]['rate']).round(2);
+  return utils.round( ((1/rates[0]['rate']) * rates[1]['rate']) );
  };
