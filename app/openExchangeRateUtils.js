@@ -1,22 +1,19 @@
 var currencies = require('./libs/currencies.js');
 
+module.exports.verifyInput = function (amount, convertFrom, convertTo) {
+  var checkAmount   = true;
+  var checkCurrency = currencies.hasOwnProperty(convertFrom) && 
+                      currencies.hasOwnProperty(convertTo);
+
+  if (amount) { checkAmount = !isNaN(amount); }
+
+  return checkAmount && checkCurrency ? 
+    { 'amount': amount, 'convertFrom': convertFrom, 'convertTo': convertTo } : false;
+};
+
 // Kudos to: http://stackoverflow.com/a/19722641 
 module.exports.round = function(num) {
   return +(Math.round(num + "e+2")  + "e-2");
-};
-
-module.exports.write = function (liveRates) {
-  var ratesTxt = '';
-
-  for (var currency in liveRates) {
-    if (currencies.hasOwnProperty(currency)) {
-      var symbol = currencies[currency]["symbol_native"];
-      var rate   = module.exports.round(liveRates[currency]);
-      ratesTxt += currency + '=' + symbol + ' ' + rate + '\n'      
-    }
-  }
-
-  return ratesTxt.slice(0, -1);
 };
 
 module.exports.read = function (localRates, convertFrom, convertTo) {
@@ -36,6 +33,21 @@ module.exports.read = function (localRates, convertFrom, convertTo) {
     results[currency] = { 'symbol' : symbol, 'rate' : rate };
   }
 };
+
+module.exports.write = function (liveRates) {
+  var ratesTxt = '';
+  
+  for (var currency in liveRates) {
+    if (currencies.hasOwnProperty(currency)) {
+      var symbol = currencies[currency]["symbol_native"];
+      var rate   = module.exports.round(liveRates[currency]);
+      ratesTxt += currency + '=' + symbol + ' ' + rate + '\n'      
+    }
+  }
+
+  return ratesTxt.slice(0, -1);
+};
+
 
 module.exports.formatConversion = function (options, rates) {
   var convertedRate = (options.amount / rates[0]['rate']) * rates[1]['rate'];
