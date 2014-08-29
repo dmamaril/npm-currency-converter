@@ -15,11 +15,11 @@ var cc = require('currency-converter')({ CLIENTKEY: YOUR_OPEN_EXCHANGE_RATES_KEY
 ```
 
 <h1> Usage </h1>
-This module makes it <em>extremely</em> easy for you to convert currencies. The very basic input takes in two parameters. <b> convertFrom </b> &  <b> convertTo </b> have to be valid country codes. See list <a href='http://www.localeplanet.com/api/auto/currencymap.html'> here</a>. By default, <b>.convert()</b> will retrieve the local rates from <a href='http://openexchangerates.org'>openexchangerates.org</a> unless otherwise specified.
+This module makes it <em>extremely</em> easy for you to convert currencies. The very basic input takes in two parameters. <b> convertFrom </b> &  <b> convertTo </b> have to be valid country codes. See list <a href='http://www.localeplanet.com/api/auto/currencymap.html'> here</a>. The module fetches live rates on initialize, saves it locally, and retrieves locally saved rates by default, unless otherwise specificed.
 
 
-<h2>.convert(amount, convertFrom, convertTo, [local])</h2> 
-converts an amount specificed to a specific currency. <em>local</em> is an optional parameter that uses locally stored rates for conversion.
+<h2>.convert(amount, convertFrom, convertTo, [live])</h2> 
+converts an amount specificed to a specific currency. <em>live</em> is an optional parameter that uses live rates from <a href='http://openexchangerates.org'>openexchangerates.org</a> 
 
 ```
 {
@@ -29,7 +29,7 @@ converts an amount specificed to a specific currency. <em>local</em> is an optio
 }
 ```
 
-<h2>.rates(convertFrom, convertTo, [local])</h2> 
+<h2>.rates(convertFrom, convertTo, [live])</h2> 
 returns the conversion rate between two currencies.
 ```
   {
