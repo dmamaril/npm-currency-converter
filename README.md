@@ -15,7 +15,7 @@ var cc = require('currency-converter')({ CLIENTKEY: YOUR_OPEN_EXCHANGE_RATES_KEY
 ```
 
 <h1> Usage </h1>
-This module makes it <em>extremely</em> easy for you to convert currencies. The very basic input takes in two parameters. <b> convertFrom </b> &  <b> convertTo </b> have to be valid country codes. See list <a href='http://www.localeplanet.com/api/auto/currencymap.html'> here</a>. By default, <b>.convert()</b> will retrieve the live rates from <a href='http://openexchangerates.org'>openexchangerates.org</a> unless otherwise specified.
+This module makes it <em>extremely</em> easy for you to convert currencies. The very basic input takes in two parameters. <b> convertFrom </b> &  <b> convertTo </b> have to be valid country codes. See list <a href='http://www.localeplanet.com/api/auto/currencymap.html'> here</a>. By default, <b>.convert()</b> will retrieve the local rates from <a href='http://openexchangerates.org'>openexchangerates.org</a> unless otherwise specified.
 
 
 <h2>.convert(amount, convertFrom, convertTo, [local])</h2> 

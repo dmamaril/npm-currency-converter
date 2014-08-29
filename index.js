@@ -5,26 +5,26 @@ var utils       = require('./app/openExchangeRateUtils.js');
 
 var currency_converter = {};
 
-currency_converter.convert = function (amount, convertFrom, convertTo, local) {
+currency_converter.convert = function (amount, convertFrom, convertTo, live) {
   convertFrom = convertFrom.toUpperCase();
   convertTo   = convertTo.toUpperCase();
 
   return new Promise(function (resolve, reject) {
     utils.verifyInput(convertFrom, convertTo, amount) ? 
       resolve(oxr.createProxy('formatConversion', 
-        { 'amount' : amount, 'convertFrom' : convertFrom, 'convertTo' : convertTo, 'local' : local })) : 
+        { 'amount' : amount, 'convertFrom' : convertFrom, 'convertTo' : convertTo, 'live' : live })) : 
       reject();
   });
 };
 
-currency_converter.rates = function (convertFrom, convertTo, local) {
+currency_converter.rates = function (convertFrom, convertTo, live) {
   convertFrom = convertFrom.toUpperCase();
   convertTo   = convertTo.toUpperCase();
   
   return new Promise(function (resolve, reject) {
     utils.verifyInput(convertFrom, convertTo) ?
     resolve(oxr.createProxy('formatConversionRate', 
-      { 'convertFrom' : convertFrom, 'convertTo' : convertTo, 'local' : local })) : 
+      { 'convertFrom' : convertFrom, 'convertTo' : convertTo, 'live' : live })) : 
     reject();
   });
 };

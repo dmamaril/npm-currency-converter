@@ -26,7 +26,7 @@ module.exports.createProxy = function (task, options) {
 
 module.exports.fetchOptions = function (options) {
   return new Promise(function (resolve, reject) {
-    var fetchOption = options.local ? module.exports.fetchLocalRates : module.exports.fetchLiveRates;
+    var fetchOption = options.live ? module.exports.fetchLiveRates : module.exports.fetchLocalRates;
     resolve(fetchOption(options));
   });
 }
