@@ -5,7 +5,7 @@ module.exports.verifyInput = function (convertFrom, convertTo, amount) {
   var checkCurrency = currencies.hasOwnProperty(convertFrom) && 
                       currencies.hasOwnProperty(convertTo);
 
-  if (amount) { checkAmount = !isNaN(amount); }
+  if (amount) { checkAmount = !isNaN(amount) && typeof amount === 'number'; }
 
   return checkAmount && checkCurrency;
 };
