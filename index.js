@@ -23,9 +23,9 @@ currency_converter.rates = function (convertFrom, convertTo, live) {
   
   return new Promise(function (resolve, reject) {
     utils.verifyInput(convertFrom, convertTo) ?
-    resolve(oxr.createProxy('formatConversionRate', 
-      { 'convertFrom' : convertFrom, 'convertTo' : convertTo, 'live' : live })) : 
-    reject();
+      resolve(oxr.createProxy('formatConversionRate', 
+        { 'convertFrom' : convertFrom, 'convertTo' : convertTo, 'live' : live })) : 
+      reject();
   });
 };
 

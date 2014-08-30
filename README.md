@@ -32,7 +32,5 @@ converts an amount specificed to a specific currency. <em>live</em> is an option
 <h2>.rates(convertFrom, convertTo, [live])</h2> 
 returns the conversion rate between two currencies.
 ```
-  {
-    "USD_EUR": 0.76
-  }
+  .rates('USD', 'EUR') // => 0.76
 ```
