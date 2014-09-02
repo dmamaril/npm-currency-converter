@@ -9,6 +9,8 @@ currency_converter.convert = function (amount, convertFrom, convertTo, live) {
   convertFrom = convertFrom.toUpperCase();
   convertTo   = convertTo.toUpperCase();
 
+  console.log(utils.veriyInput(convertForm, convertTo, amount));
+
   return new Promise(function (resolve, reject) {
     utils.verifyInput(convertFrom, convertTo, amount) ? 
       resolve(oxr.createProxy('formatConversion', 
