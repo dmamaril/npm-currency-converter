@@ -6,6 +6,7 @@ var utils       = require('./app/openExchangeRateUtils.js');
 var currency_converter = {};
 
 currency_converter.currencies = currencies;
+currency_converter.shutdown = oxr.shutdown;
 
 currency_converter.convert = function (amount, convertFrom, convertTo, live) {
   convertFrom = convertFrom.toUpperCase();

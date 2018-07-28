@@ -60,3 +60,15 @@ describe('currencies', function () {
     });
   });
 });
+
+describe('shutdown', function () {
+  it('should expose the method', function () {
+    expect(cc.shutdown).to.be.a('function');
+  });
+  it('should clear the interval', function () {
+    cc.shutdown().should.eventually.be.fulfilled;
+  });
+  it('should not allow duplicate shutdown', function () {
+    cc.shutdown().should.eventually.be.rejectedWith(Error);
+  });
+});
