@@ -20,15 +20,28 @@ currency_converter.convert = function (amount, convertFrom, convertTo, live) {
   });
 };
 
-currency_converter.rates = function (convertFrom, convertTo, live) {
+currency_converter.rates = function (convertFrom, convertTo, options) {
   convertFrom = convertFrom.toUpperCase();
   convertTo   = convertTo.toUpperCase();
 
+  if (false === options || true === options) {
+    options = {
+      live: options
+    };
+  }
+  options = options || {};
+
   return new Promise(function (resolve, reject) {
-    utils.verifyInput(convertFrom, convertTo) ?
-      resolve(oxr.createProxy('formatConversionRate',
-        { 'convertFrom' : convertFrom, 'convertTo' : convertTo, 'live' : live })) :
+    if (!utils.verifyInput(convertFrom, convertTo)) {
       reject();
+      return;
+    }
+    resolve(oxr.createProxy('formatConversionRate', {
+      convertFrom: convertFrom,
+      convertTo: convertTo,
+      live: options.live,
+      round: options.round
+    }));
   });
 };
 

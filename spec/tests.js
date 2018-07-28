@@ -21,6 +21,24 @@ describe('conversionRates', function () {
   it('should resolve on lower case country codes', function () {
     return cc.rates('usd', 'eur').should.be.ok;
   });
+
+  it('should not round tiny fractional rates by default', function () {
+    return cc.rates('IDR', 'USD')
+      .then(function(rate) {
+        expect(rate).to.be.a('number');
+        expect(rate).to.be.greaterThan(0);
+      });
+  });
+
+  it('should round the rate if requested', function () {
+    return cc.rates('USD', 'EUR', {
+      round: true
+    })
+      .then(function(rate) {
+        expect(rate).to.be.a('number');
+        expect(String(rate)).to.match(/^[+-]?([0-9]*[.])?[0-9]{2}$/);
+      });
+  });
 });
 
 
