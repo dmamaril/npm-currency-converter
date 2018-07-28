@@ -5,14 +5,17 @@ var utils       = require('./app/openExchangeRateUtils.js');
 
 var currency_converter = {};
 
+currency_converter.currencies = currencies;
+currency_converter.shutdown = oxr.shutdown;
+
 currency_converter.convert = function (amount, convertFrom, convertTo, live) {
   convertFrom = convertFrom.toUpperCase();
   convertTo   = convertTo.toUpperCase();
 
   return new Promise(function (resolve, reject) {
-    utils.verifyInput(convertFrom, convertTo, amount) ? 
-      resolve(oxr.createProxy('formatConversion', 
-        { 'amount' : amount, 'convertFrom' : convertFrom, 'convertTo' : convertTo, 'live' : live })) : 
+    utils.verifyInput(convertFrom, convertTo, amount) ?
+      resolve(oxr.createProxy('formatConversion',
+        { 'amount' : amount, 'convertFrom' : convertFrom, 'convertTo' : convertTo, 'live' : live })) :
       reject();
   });
 };
@@ -20,11 +23,11 @@ currency_converter.convert = function (amount, convertFrom, convertTo, live) {
 currency_converter.rates = function (convertFrom, convertTo, live) {
   convertFrom = convertFrom.toUpperCase();
   convertTo   = convertTo.toUpperCase();
-  
+
   return new Promise(function (resolve, reject) {
     utils.verifyInput(convertFrom, convertTo) ?
-      resolve(oxr.createProxy('formatConversionRate', 
-        { 'convertFrom' : convertFrom, 'convertTo' : convertTo, 'live' : live })) : 
+      resolve(oxr.createProxy('formatConversionRate',
+        { 'convertFrom' : convertFrom, 'convertTo' : convertTo, 'live' : live })) :
       reject();
   });
 };

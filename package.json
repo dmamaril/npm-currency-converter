@@ -1,10 +1,10 @@
 {
   "name": "currency-converter",
   "version": "0.1.12",
-  "description": "currency-converter ==================",
+  "description": "Currency Converter for openexchangerates.org",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "./node_modules/mocha/bin/mocha spec/tests.js --exit",
     "start": "node index.js"
   },
   "repository": {
@@ -28,7 +28,8 @@
     "request": "^2.40.0"
   },
   "devDependencies": {
-    "chai": "^1.9.1",
-    "chai-as-promised": "^4.1.1"
+    "chai": "^4.1.2",
+    "chai-as-promised": "^7.1.1",
+    "mocha": "^5.2.0"
   }
 }

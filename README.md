@@ -1,36 +1,77 @@
 npm-currency-converter
 =========================
-Conversion rates between currencies and rate conversion!
 
-<h1> Start </h1>
-Register for your <a href='https://openexchangerates.org/signup/free'>openexchangerates</a>.
-install the package
+Conversion rates between currencies and rate conversion using [openexchangerates](https://openexchangerates.org).
+
+Pulls the exchange rate remotely and saves locally to a text file.
+
+# Getting Started
+
+Register for a client key at [openexchangerates.org](https://openexchangerates.org/signup/free)
+
+Install the package:
+
 ```
 npm install currency-converter
 ```
-require the module. 
-NOTE: Default fetchInterval value is set to one hour.
-```
-var cc = require('currency-converter')({ CLIENTKEY: YOUR_OPEN_EXCHANGE_RATES_KEY, [fetchInterval: 3600000] });
-```
 
-<h1> Usage </h1>
-This module makes it <em>extremely</em> easy for you to convert currencies. The very basic input takes in two parameters. <b> convertFrom </b> &  <b> convertTo </b> have to be valid country codes. See list <a href='http://www.localeplanet.com/api/auto/currencymap.html'> here</a>. The module fetches live rates on initialize, saves it locally, and retrieves locally saved rates by default, unless otherwise specificed.
-
-
-<h2>.convert(amount, convertFrom, convertTo, [live])</h2> 
-converts an amount specificed to a specific currency. <em>live</em> is an optional parameter that uses live rates from <a href='http://openexchangerates.org'>openexchangerates.org</a> 
+Use it:
 
 ```
-{
-    "currency": "EUR",
-    "symbol": "€",
-    "amount": 0.76
-}
+var cc = require('currency-converter')({
+  CLIENTKEY: YOUR_OPEN_EXCHANGE_RATES_KEY, [fetchInterval: 3600000]
+});
 ```
 
-<h2>.rates(convertFrom, convertTo, [live])</h2> 
-returns the conversion rate between two currencies.
+__NOTE: Default fetchInterval value is set to one hour.__
+
+# Usage
+
+This module makes it __extremely__ easy for you to convert currencies.
+
+The very basic input takes in two parameters. _convertFrom_ & _convertTo_ must be valid country codes. See list <a href='http://www.localeplanet.com/api/auto/currencymap.html'> here</a>.
+
+The module fetches live rates on initialize, saves it locally, and retrieves locally saved rates by default, unless otherwise specified.
+
+## .convert(amount, convertFrom, convertTo, [live])
+
+Converts an amount specified to a specific currency. _live_ is an optional parameter
+that uses live rates from [openexchangerates.org](https://openexchangerates.org/signup/free)
+
+Response:
+
 ```
-  .rates('USD', 'EUR') // => 0.76
+cc.rates(1, 'USD', 'EUR')
+  .then(function(converted) {
+    // {
+    //    "currency": "EUR",
+    //    "symbol": "€",
+    //    "amount": 0.76
+    // }
+  });
+```
+
+## .rates(convertFrom, convertTo, [live])
+
+Returns the conversion rate between two currencies:
+
+```
+cc.rates('USD', 'EUR')
+  .then(function(rate) {
+    // rate => 0.76
+  });
+```
+
+## .currencies
+
+The map of currency codes to info about the currency
+
+```
+cc.currencies.EUR
+// {
+//    "currency": "EUR",
+//    "symbol": "€",
+//    "amount": 0.76
+// }
+
 ```
